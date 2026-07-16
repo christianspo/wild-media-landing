@@ -34,19 +34,10 @@ function renderPackages() {
 function selectPackage(name) {
   selectedPackage = name;
   renderPackages();
-  const selectedEl = document.getElementById('selected-package');
-  const nameEl = document.getElementById('selected-package-name');
-  if (selectedEl && nameEl) {
-    nameEl.textContent = `Package: ${name}`;
-    selectedEl.hidden = false;
-  }
-  document.getElementById('lead-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function clearPackage() {
-  selectedPackage = null;
-  renderPackages();
-  document.getElementById('selected-package').hidden = true;
+  const select = document.getElementById('package-select');
+  if (select) select.value = name;
+  const form = document.getElementById('lead-form');
+  if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderFaqs() {
@@ -74,21 +65,45 @@ function renderFaqs() {
   draw();
 }
 
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+function forceScrollTop() {
+  if (window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+}
+if (window.location.hash) {
+  forceScrollTop();
+  window.addEventListener('load', () => {
+    forceScrollTop();
+    setTimeout(forceScrollTop, 0);
+    setTimeout(forceScrollTop, 150);
+    setTimeout(() => {
+      forceScrollTop();
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }, 350);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderPackages();
   renderFaqs();
 
-  const clearBtn = document.getElementById('clear-package');
-  if (clearBtn) clearBtn.addEventListener('click', clearPackage);
+  const packageSelect = document.getElementById('package-select');
+  if (packageSelect) {
+    packageSelect.addEventListener('change', () => {
+      selectedPackage = packageSelect.value || null;
+      renderPackages();
+    });
+  }
 
   const mobileForm = document.getElementById('mobile-form');
   if (mobileForm) {
     mobileForm.addEventListener('submit', e => {
       e.preventDefault();
-      mobileForm.querySelectorAll('input, button').forEach(el => el.style.display = 'none');
+      mobileForm.querySelectorAll('input, button, .m-form__field').forEach(el => el.style.display = 'none');
       mobileForm.querySelector('.m-form__title').style.display = 'none';
-      const selected = document.getElementById('selected-package');
-      if (selected) selected.style.display = 'none';
       mobileForm.querySelector('.m-form__thanks').hidden = false;
     });
   }
