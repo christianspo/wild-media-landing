@@ -88,11 +88,21 @@ input, textarea, button { font-family: inherit; }
   flex-wrap: wrap; gap: 32px;
 }
 .d-clients__logo {
-  height: 26px; width: auto; max-width: 120px; object-fit: contain;
-  filter: brightness(0) invert(1); opacity: .55; transition: opacity .2s;
+  display: inline-block;
+  height: 32px; width: 110px;
+  background-color: var(--cream);
+  -webkit-mask-image: var(--logo);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  -webkit-mask-size: contain;
+  mask-image: var(--logo);
+  mask-repeat: no-repeat;
+  mask-position: left center;
+  mask-size: contain;
+  opacity: .9; transition: opacity .2s;
 }
-.d-clients__logo:hover { opacity: .9; }
-.d-clients__logo--d2c { height: 20px; }
+.d-clients__logo:hover { opacity: 1; }
+.d-clients__logo--d2c { height: 24px; }
 
 .d-services { padding: 96px 56px; display: grid; grid-template-columns: 380px 1fr; gap: 64px; }
 .d-services h2 { font-weight: 900; font-size: 52px; letter-spacing: -0.02em; line-height: 1; }
@@ -154,8 +164,8 @@ input, textarea, button { font-family: inherit; }
   .d-hero__row p { font-size: 16px; }
   .d-hero__ctas .btn { padding: 14px 24px; font-size: 15px; }
   .d-clients { padding: 24px; gap: 20px 28px; justify-content: center; }
-  .d-clients__logo { height: 20px; }
-  .d-clients__logo--d2c { height: 16px; }
+  .d-clients__logo { height: 24px; width: 88px; }
+  .d-clients__logo--d2c { height: 18px; }
   .d-services { grid-template-columns: 1fr; padding: 56px 24px; gap: 24px; }
   .d-services h2 { font-size: 32px; }
   .d-services__title { font-size: 22px; }
